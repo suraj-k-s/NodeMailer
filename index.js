@@ -1,4 +1,7 @@
-const mailer = require("nodemailer");
+const mailer = require("nodemailer");\
+const fs = require('fs');
+const fileContent = fs.readFileSync('test.txt');
+
 var transporter = mailer.createTransport({
   service: "gmail",
   auth: {
@@ -12,6 +15,12 @@ function sendEmail(to, subject, content) {
     to,
     subject,
     html: content,
+    attachments: [
+    {
+      filename: 'test.txt',
+      content: fileContent
+    }
+  ],
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
